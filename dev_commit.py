@@ -13,24 +13,8 @@ import json
 import uuid
 from helpers import *
 
-base_path = os.environ['WIDGET_ROOT_DIR']
 
 
-
-# Sort data by block_timestamp
-snowflake_data = get_widget_names()
-widget_names_list = [row['widget_name'] for row in snowflake_data]
-
-widget_names_list = set(widget_names_list)
-# widget_names_list = [name for name in widget_names_list if name]
-
-
-# ad_hot, skip widgets in this list already:
-existing_widgets = get_checkpoints(base_path)
-
-failed_widgets = []
-
-# WIDGET_LOOP
 
 def get_df_from_widget_name(widget_name, existing_widgets):
     try:
@@ -107,11 +91,20 @@ def process_widgets(widget_names_list, existing_widgets, base_path):
 
         os.chdir(base_path)
 
-# Initialize your variables here
-widget_names_list = []
-existing_widgets = {}
-base_path = "/some/directory"
+
+base_path = os.environ['WIDGET_ROOT_DIR']
+
+
+
+# Sort data by block_timestamp
+snowflake_data = get_widget_names()
+widget_names_list = [row['widget_name'] for row in snowflake_data]
+widget_names_list = set(widget_names_list)
+# widget_names_list = [name for name in widget_names_list if name]
+# ad_hot, skip widgets in this list already:
+existing_widgets = get_checkpoints(base_path)
 failed_widgets = []
+
 
 # Call the main function to process widgets
 process_widgets(widget_names_list, existing_widgets, base_path)
